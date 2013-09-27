@@ -74,7 +74,7 @@ class DatabaseInitSpec extends FlatSpec with ShouldMatchers with DatabaseInit wi
 		// Select Person with id=1 from the Person table
 		transaction {
 			val person = persons.where(c=> c.id === 1).single
-			person.firstname shoud("test")
+			person.firstname should("test")
 			println("Person firstname: " + person.firstname)
 		}
 	}
