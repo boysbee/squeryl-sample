@@ -4,14 +4,17 @@ import com.mchange.v2.c3p0.ComboPooledDataSource
 import org.squeryl.adapters.H2Adapter
 import org.squeryl.Session
 import org.squeryl.SessionFactory
+import org.squeryl.Schema
 import org.slf4j.LoggerFactory
+import org.squeryl.PrimitiveTypeMode._
+
 
 trait DatabaseInit {
   val logger = LoggerFactory.getLogger(getClass)
 
   val databaseUsername = "sa"
   val databasePassword = ""
-  val databaseConnection = "jdbc:h2:mem:test"
+  val databaseConnection = "jdbc:h2:mem:mock"
 
   var cpds = new ComboPooledDataSource
 
@@ -37,4 +40,8 @@ trait DatabaseInit {
     logger.info("Closing c3po connection pool")
     cpds.close()
   }	
+}
+
+object DB extends DatabaseInit {
+  
 }
