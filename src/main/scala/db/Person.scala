@@ -1,30 +1,24 @@
 package db
 
 import org.squeryl._
+import org.squeryl.KeyedEntity
 import org.squeryl.PrimitiveTypeMode._
+import org.squeryl.annotations.{Column}
 
 // create Person class which has fields same as table Person
-case class Person (id : Long , firstname : String)
+class Person (@Column("person_id") val id : Long = 0, var firstname : String)  extends KeyedEntity[Long] {
+	
+	def personId = id
+
+}
 
 object PersonSchema extends Schema {
 
 	val persons = table[Person]("Person")
 
-
-	def add(o : Person) : Person = {
-		val p = persons.insert(o)
-		return p
-	}
-
-	def findById(id : Long ) : Person = {
-		var person : Person = null
-		// Select Person with id=1 from the Person table
-		transaction {
-			person = persons.where(c=> c.id === 1).single
-		}
-
-		return person
-	}
-
+	on(persons)(p => declare(
+      p.id is (primaryKey),
+      p.firstname is (named("first_name"))
+    ))
 
 }
